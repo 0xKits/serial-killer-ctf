@@ -1,0 +1,1 @@
+# Directory for all lore related stuff 

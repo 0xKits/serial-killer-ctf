@@ -21,3 +21,10 @@ A few type of things we can do.
 	- The serial killer's texts being sent and received (There are a few possibilities of questions here)
 	- The sites that they are visiting (possibly the killer stalking their next target, or if the killer is booking their tickets to flee from the town or so many more things)
 	- Some particular data that the serial killer downloaded, and then that data could technically be an ELF (executable file) which could lead to a reversing chall ([inspiration chall](https://medium.com/@nathanielpascuarijndorp/uoftctf-2025-poof-8c4146bfdc65) We can make it a little more straightforward though)
+
+### Web
+#### First
+Should be the entry point of the challenge. Can be something like a missing persons' information government site that has more info about the victim, like police records etc. The poster we will paste around will have a qr code or a link to this website, starting the challenge. Some info can be hidden in files/reports that the website will host, leading us to challenge 2. 
+
+#### Second
+Can be something like the personal blog of someone that uses some "CMS" we will make up that has a login vulnerability (Idk who the someone will be for now)/or request forgery. For the login vulnerability, the login page can be prone to SQLi, which the player exploits to get passwords stored in plaintext. The admin page will then contain   

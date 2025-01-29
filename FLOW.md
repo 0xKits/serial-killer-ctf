@@ -6,9 +6,10 @@ Moderation will be done by a "government" website, resembling a THM room. The sa
 4. (Some connecting chall here)
 5. Mono-substitution cipher decrypting (gotta make it obvious)
 6. SQL injection
-7. Just look at metadata and find coordinates and find the place he goes to (_forensics_ + osint)
+7. Just look at metadata and find coordinates and find the place hYae goes to (_forensics_ + osint)
 8. Moderately hard Reversing chall
 
+Entry point: QR code in the missing person's poster leads to the missing persons' info website made by the police. Website contains random info about the victim. Below that, it should contain the sanity check, with a caption like "enter this text to get started with tracking your investigation.", making it like you are helping the government solve this case. The first puzzle will be below this section, which is ciphertext left by the killer at the murder scene.
 
 The ciphertext will be some long sentence having the next victim's name, leading to the OSINT challenge
 
@@ -28,8 +29,7 @@ challenge 6: You find out that there is a login page and you also find out that 
 
 challenge 7: You break into the personal account of the killer, and find his archived post. The archived post has the image of his most recent killing, which seemed to have happened at a very unlikely place. Find where the image was taken, maybe you can really catch him this time.
 
-challenge 8: The agency finds out the real identity of the killer from the information you provided. Good Job!. Now, the killer has sent a very ominous message to you about bombs blowing. Entry point: QR code in the missing person's poster leads to the missing persons' info website made by the police. Website contains random info about the victim. Below that, it should contain the sanity check, with a caption like "enter this text to get started with tracking your investigation.", making it like you are helping the government solve this case. The first puzzle will be below this section, which is ciphertext left by the killer at the murder scene.
-
+challenge 8: The agency finds out the real identity of the killer from the information you provided. Good Job!. Now, the killer has sent a very ominous message to you about bombs blowing. 
 Last: The killer has caught on to you. Maddened, he has decided to bomb the very place he is studying in, using a Trojan which is a ticking time bomb, which will detonate the explosive from afar if certain conditions are met. The killer sends the trojan to you as a challenge, a taunt. You analyze the trojan and realize there is a disarm feature for whatever reason. Find the string that will make the disarm function work
 
 The agency will somehow connect to the trojan and disarm it idk You win!!!!

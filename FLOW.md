@@ -11,6 +11,8 @@ Moderation will be done by a "government" website, resembling a THM room. The sa
 
 Entry point: QR code in the missing person's poster leads to the missing persons' info website made by the police. Website contains random info about the victim. Below that, it should contain the sanity check, with a caption like "enter this text to get started with tracking your investigation.", making it like you are helping the government solve this case. The first puzzle will be below this section, which is ciphertext left by the killer at the murder scene.
 
+Kind of a retcon, but we can have an "Update" section in the missing persons' info website, telling the victim was murdered, and this was the text left behind by the killer.
+
 The ciphertext will be some long sentence having the next victim's name, leading to the OSINT challenge
 
 1st : Sanity Check

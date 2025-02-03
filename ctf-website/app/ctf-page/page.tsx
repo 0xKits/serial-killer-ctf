@@ -1,3 +1,5 @@
+import Footer from "@/components/footer";
+import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import { Search, Menu } from "lucide-react";
 import Image from "next/image";
@@ -7,39 +9,7 @@ export default function FBILandingPage() {
 	return (
 		<div className="min-h-screen flex flex-col bg-white text-gray-800">
 			{/* Header */}
-			<header className="bg-[#00285e] text-white">
-				<div className="container mx-auto px-4 py-2 flex justify-between items-center">
-					<div className="flex items-center space-x-4">
-						<Image
-							src="/fbi-logo.png"
-							alt="FBI Seal"
-							width={50}
-							height={50}
-							className="rounded-full"
-						/>
-						<h1 className="text-2xl font-bold">
-							Federal Bureau of Investigation
-						</h1>
-					</div>
-					<nav className="hidden md:flex space-x-4">
-						<Link href="#" className="hover:underline">
-							Home
-						</Link>
-						<Link href="#" className="hover:underline">
-							Most Wanted
-						</Link>
-						<Link href="#" className="hover:underline">
-							About
-						</Link>
-						<Link href="#" className="hover:underline">
-							Careers
-						</Link>
-					</nav>
-					<button className="md:hidden">
-						<Menu />
-					</button>
-				</div>
-			</header>
+			<Navbar />
 
 			{/* Main Content */}
 			<main className="flex-grow">
@@ -115,19 +85,7 @@ export default function FBILandingPage() {
 			</main>
 
 			{/* Footer */}
-			<footer className="bg-[#00285e] text-white py-8">
-				<div className="container mx-auto px-4">
-					<div className="flex flex-col md:flex-row justify-between items-center">
-						<div className="mb-4 md:mb-0">
-							<p>
-								&copy; {new Date().getFullYear()} Federal Bureau
-								of Investigation
-							</p>
-						</div>
-						<div className="flex space-x-4"></div>
-					</div>
-				</div>
-			</footer>
+			<Footer />
 		</div>
 	);
 }

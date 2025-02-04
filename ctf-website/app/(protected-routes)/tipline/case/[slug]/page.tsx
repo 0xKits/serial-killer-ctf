@@ -152,10 +152,10 @@ export default function CaseInformation({
 		return (
 			<div className="min-h-screen flex flex-col bg-gray-100 text-gray-800">
 				{loading && (
-					<div className="w-screen h-screen absolute z-50 bg-black/20 backdrop-blur-md flex flex-col justify-center items-center">
-						<div className="flex justify-center items-center gap-4 text-6xl text-white bold ">
+					<div className="w-screen h-screen absolute z-50 bg-white/20 backdrop-blur-md flex flex-col justify-center items-center">
+						<div className="flex justify-center items-center gap-4 text-6xl text-black bold ">
 							<p>Loading</p>
-							<SvgSpinnersBlocksWave className="shadow-[0_0_15px_#ffffff]" />
+							<SvgSpinnersBlocksWave className="" />
 						</div>
 					</div>
 				)}

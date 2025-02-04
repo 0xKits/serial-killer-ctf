@@ -46,7 +46,7 @@ export default function UsernamePopup({
 					<DialogTitle>Set Your Username</DialogTitle>
 					<DialogDescription>
 						You must set a username before you can dismiss this
-						popup.
+						popup. (WARNING: You cannot change your username once set)
 					</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={handleUsernameSubmit} className="space-y-4">

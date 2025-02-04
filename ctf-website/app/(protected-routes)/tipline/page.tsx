@@ -9,6 +9,8 @@ import UsernamePopup from "@/components/ui/username-popup";
 import { QueryData } from "@supabase/supabase-js";
 import { addOneToArray } from "@/utils/arrayUtils";
 import { STARTED } from "@/siteconfig";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function CaseFilesLanding() {
 	const supabase = createClient();
@@ -25,12 +27,13 @@ export default function CaseFilesLanding() {
 	>([]);
 	const [hasUsername, setHasUsername] = useState<boolean>(true);
 
+	const router = useRouter();
 	useEffect(() => {
 		supabase.auth.getUser().then((user) => {
 			if (user.data.user) {
 				supabase
 					.from("profiles")
-					.select(`question(index)`)
+					.select(`*`)
 					.eq("user", user.data.user.id)
 					.then((r) => {
 						if (r.data) {
@@ -40,7 +43,7 @@ export default function CaseFilesLanding() {
 							}
 							if (r.data[0]) {
 								setHasUsername(true);
-								setUsername(r.data[0].question);
+								setUsername(r.data[0].username);
 							}
 						}
 					});
@@ -138,17 +141,38 @@ export default function CaseFilesLanding() {
 					/>
 				)}
 				<header className="bg-[#00285e] text-white py-4">
-					<div className="container mx-auto px-4 flex items-center">
-						<Image
-							src="/fbi-logo.png"
-							alt="FBI Seal"
-							width={50}
-							height={50}
-							className="rounded-full mr-4"
-						/>
-						<h1 className="text-2xl font-bold">
-							Federal Bureau of Investigation
-						</h1>
+					<div className="container mx-auto px-4 flex items-center justify-between">
+						<div className="flex items-center">
+							<Image
+								src="/fbi-logo.png"
+								alt="FBI Seal"
+								width={50}
+								height={50}
+								className="rounded-full mr-4"
+							/>
+							<h1 className="text-2xl font-bold">
+								Federal Bureau of Investigation
+							</h1>
+						</div>
+						<div>
+							{hasUsername && (
+								<div className="flex justify-center items-center gap-4">
+									<p>
+										Logged in as{" "}
+										<b className="text-lg">{username}</b>
+									</p>
+									<Button
+										variant={"secondary"}
+										className=""
+										onClick={() => {
+											supabase.auth.signOut();router.refresh();
+										}}
+									>
+										Log Out
+									</Button>
+								</div>
+							)}
+						</div>
 					</div>
 				</header>
 
@@ -227,7 +251,9 @@ export default function CaseFilesLanding() {
 		);
 	}
 
-	return(
-		<div className="flex justify-center items-center font-bold text-center text-8xl">Site under maintenance until 15:30 05/02/25 IST</div>
-	)
+	return (
+		<div className="flex justify-center items-center font-bold text-center text-8xl">
+			Site under maintenance until 15:30 05/02/25 IST
+		</div>
+	);
 }

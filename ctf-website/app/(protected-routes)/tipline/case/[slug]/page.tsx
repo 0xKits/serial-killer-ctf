@@ -9,6 +9,7 @@ import { createClient } from "@/utils/supabase/client";
 import { QueryData } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import { addOneToArray } from "@/utils/arrayUtils";
+import Link from "next/link";
 
 export default function CaseInformation({
 	params,
@@ -24,6 +25,12 @@ export default function CaseInformation({
 		task: string;
 	} | null>(null);
 	const [flagInput, setFlagInput] = useState("");
+	const [attachments, setAttachments] = useState<
+		{
+			attachment: string;
+			attachment_name: string;
+		}[]
+	>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [caseNumber, setCaseNumber] = useState<number | null>(null);
 	const [flagStatus, setFlagStatus] = useState<"idle" | "success" | "error">(
@@ -76,6 +83,31 @@ export default function CaseInformation({
 											setLoading(false);
 										}
 									});
+
+								const attachmentsQuery = supabase.from(
+									"attachments"
+								).select(`
+                  object_path,
+                  object_name
+                `);
+
+								attachmentsQuery.then((result) => {
+									if (result.data) {
+										setAttachments(
+											result.data.map((a) => {
+												return {
+													attachment: supabase.storage
+														.from("questions")
+														.getPublicUrl(
+															a.object_path
+														).data.publicUrl,
+													attachment_name:
+														a.object_name,
+												};
+											})
+										);
+									}
+								});
 							}
 						}
 					});
@@ -86,13 +118,25 @@ export default function CaseInformation({
 
 	const handleFlagSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// This is where you'd typically validate the flag
-		// For this example, let's say the correct flag is "FBI_FLAG_123"
-		if (flagInput === "FBI_FLAG_123") {
-			setFlagStatus("success");
-		} else {
-			setFlagStatus("error");
-		}
+		fetch("/api/submit_flag", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				question_index: caseNumber,
+				flag: flagInput,
+			}),
+		}).then((res) => {
+			res.json().then((data) => {
+				if (data.correct) {
+					setFlagStatus("success");
+          redirect("/tipline");
+				} else {
+					setFlagStatus("error");
+				}
+			});
+		});
 	};
 
 	return (
@@ -142,36 +186,24 @@ export default function CaseInformation({
 								Available Evidence
 							</h4>
 							<ul className="list-disc pl-5 space-y-2">
-								<li>
-									Network traffic logs
-									<Button
-										variant="link"
-										className="ml-2 text-[#b41e22]"
-									>
-										<FileDown className="mr-1" size={16} />
-										Download
-									</Button>
-								</li>
-								<li>
-									Encrypted communication transcripts
-									<Button
-										variant="link"
-										className="ml-2 text-[#b41e22]"
-									>
-										<FileDown className="mr-1" size={16} />
-										Download
-									</Button>
-								</li>
-								<li>
-									Suspect's hard drive image
-									<Button
-										variant="link"
-										className="ml-2 text-[#b41e22]"
-									>
-										<FileDown className="mr-1" size={16} />
-										Download
-									</Button>
-								</li>
+								{attachments.map((a) => (
+									<li key={a.attachment_name}>
+										{a.attachment_name}
+										<Button
+											variant="link"
+											asChild
+											className="ml-2 text-[#b41e22]"
+										>
+											<a href={a.attachment} download>
+												<FileDown
+													className="mr-1"
+													size={16}
+												/>
+												Download
+											</a>
+										</Button>
+									</li>
+								))}
 							</ul>
 						</div>
 

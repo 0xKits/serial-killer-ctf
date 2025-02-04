@@ -13,22 +13,22 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          object_id: string
           object_name: string
+          object_path: string
           question: number
         }
         Insert: {
           created_at?: string
           id?: number
-          object_id: string
           object_name: string
+          object_path: string
           question: number
         }
         Update: {
           created_at?: string
           id?: number
-          object_id?: string
           object_name?: string
+          object_path?: string
           question?: number
         }
         Relationships: [

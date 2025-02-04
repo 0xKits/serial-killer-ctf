@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Search, Menu } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+
+import { Search } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 export default function FBILandingPage() {

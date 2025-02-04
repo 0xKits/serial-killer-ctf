@@ -235,7 +235,7 @@ export default function CaseInformation({
 	);
 }
 
-export function SvgSpinnersBlocksWave(props: React.SVGProps<SVGSVGElement>) {
+function SvgSpinnersBlocksWave(props: React.SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

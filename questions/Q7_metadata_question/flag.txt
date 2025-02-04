@@ -1,0 +1,5 @@
+flag format:
+flag{48_8338_2_3324_catacombs}
+flag{48_8338_2_3324_catacombes}
+flag{48_8338_2_3324_les_catabombes_des_paris}
+flag{48_8338_2_3324_catacombs_of_paris}

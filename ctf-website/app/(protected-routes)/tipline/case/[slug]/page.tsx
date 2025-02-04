@@ -77,45 +77,56 @@ export default function CaseInformation({
 									.from("questions")
 									.select(
 										`
-                id,
-                title,
-                description,
-                index,
-                task
-              `
+											id,
+											title,
+											description,
+											index,
+											task
+										`
 									)
 									.eq("index", Number(p.slug))
 									.then((fuckThis) => {
 										if (fuckThis.data) {
 											setQuestion(fuckThis.data[0]);
 											setLoading(false);
+											supabase
+												.from("attachments")
+												.select(
+													`
+												object_path,
+												object_name
+												`
+												)
+												.eq(
+													"question",
+													fuckThis.data[0].id
+												)
+												.then((result) => {
+													if (result.data) {
+														setAttachments(
+															result.data.map(
+																(a) => {
+																	return {
+																		attachment:
+																			supabase.storage
+																				.from(
+																					"questions"
+																				)
+																				.getPublicUrl(
+																					a.object_path
+																				)
+																				.data
+																				.publicUrl,
+																		attachment_name:
+																			a.object_name,
+																	};
+																}
+															)
+														);
+													}
+												});
 										}
 									});
-
-								const attachmentsQuery = supabase.from(
-									"attachments"
-								).select(`
-                  object_path,
-                  object_name
-                `);
-
-								attachmentsQuery.then((result) => {
-									if (result.data) {
-										setAttachments(
-											result.data.map((a) => {
-												return {
-													attachment: supabase.storage
-														.from("questions")
-														.getPublicUrl(
-															a.object_path
-														).data.publicUrl,
-													attachment_name:
-														a.object_name,
-												};
-											})
-										);
-									}
-								});
 							}
 						}
 					});
@@ -147,8 +158,7 @@ export default function CaseInformation({
 		});
 	};
 
-	if(STARTED) {
-
+	if (STARTED) {
 		return (
 			<div className="min-h-screen flex flex-col bg-gray-100 text-gray-800">
 				{loading && (
@@ -175,7 +185,7 @@ export default function CaseInformation({
 						</h1>
 					</div>
 				</header>
-	
+
 				<main className="flex-grow container mx-auto px-4 py-8">
 					<div className="bg-white shadow-lg rounded-lg overflow-hidden">
 						<div className="p-6 border-b border-gray-200">
@@ -186,13 +196,13 @@ export default function CaseInformation({
 								Last Updated: {new Date().toLocaleDateString()}
 							</p>
 						</div>
-	
+
 						<div className="p-6">
 							<h3 className="text-xl font-semibold mb-4">
 								Case Overview
 							</h3>
 							<p className="mb-4">{question?.description}</p>
-	
+
 							<div className="mb-6">
 								<h4 className="text-lg font-semibold mb-2">
 									Available Evidence
@@ -206,7 +216,12 @@ export default function CaseInformation({
 												asChild
 												className="ml-2 text-[#b41e22]"
 											>
-												<a href={a.attachment}>
+												<a
+													href={
+														a.attachment +
+														"?download"
+													}
+												>
 													<FileDown
 														className="mr-1"
 														size={16}
@@ -218,13 +233,18 @@ export default function CaseInformation({
 									))}
 								</ul>
 							</div>
-	
+
 							<div className="mb-6">
-								<h4 className="text-lg font-semibold mb-2">Task</h4>
+								<h4 className="text-lg font-semibold mb-2">
+									Task
+								</h4>
 								<p>{question?.task}</p>
 							</div>
-	
-							<form onSubmit={handleFlagSubmit} className="space-y-4">
+
+							<form
+								onSubmit={handleFlagSubmit}
+								className="space-y-4"
+							>
 								<div>
 									<label
 										htmlFor="flag"
@@ -254,23 +274,30 @@ export default function CaseInformation({
 								</div>
 								{flagStatus === "success" && (
 									<div className="flex items-center text-green-600">
-										<CheckCircle className="mr-2" size={20} />
+										<CheckCircle
+											className="mr-2"
+											size={20}
+										/>
 										Information verified. Thank you for your
 										contribution to this case.
 									</div>
 								)}
 								{flagStatus === "error" && (
 									<div className="flex items-center text-[#b41e22]">
-										<AlertTriangle className="mr-2" size={20} />
-										Unable to verify the provided information.
-										Please review and try again.
+										<AlertTriangle
+											className="mr-2"
+											size={20}
+										/>
+										Unable to verify the provided
+										information. Please review and try
+										again.
 									</div>
 								)}
 							</form>
 						</div>
 					</div>
 				</main>
-	
+
 				<footer className="bg-[#00285e] text-white py-4 mt-8">
 					<div className="container mx-auto px-4 text-center">
 						<p>
@@ -282,9 +309,11 @@ export default function CaseInformation({
 			</div>
 		);
 	}
-	return(
-		<div className="flex justify-center items-center font-bold text-center text-8xl">Site under maintenance until 15:30 05/02/25 IST</div>
-	)
+	return (
+		<div className="flex justify-center items-center font-bold text-center text-8xl">
+			Site under maintenance until 15:30 05/02/25 IST
+		</div>
+	);
 }
 
 function SvgSpinnersBlocksWave(props: React.SVGProps<SVGSVGElement>) {

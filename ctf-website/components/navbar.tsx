@@ -31,9 +31,6 @@ export default function Navbar() {
                     <Link href="#" className="hover:underline">
                         Careers
                     </Link>
-                    <Link href="#" className="hover:underline" onClick={signOutAction}>
-                        Sign out
-                    </Link>
                 </nav>
                 <button className="md:hidden">
                     <Menu />

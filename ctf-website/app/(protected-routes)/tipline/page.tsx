@@ -8,7 +8,7 @@ import { createClient } from "@/utils/supabase/client";
 import UsernamePopup from "@/components/ui/username-popup";
 import { QueryData } from "@supabase/supabase-js";
 
-const addOneToArray = (arr: number[]) => {
+export const addOneToArray = (arr: number[]) => {
 	const next = Math.max(...arr) + 1;
 	return [...arr, next];
 };

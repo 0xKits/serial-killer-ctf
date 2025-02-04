@@ -9,8 +9,6 @@ import UsernamePopup from "@/components/ui/username-popup";
 import { QueryData } from "@supabase/supabase-js";
 import { addOneToArray } from "@/utils/arrayUtils";
 
-
-
 export default function CaseFilesLanding() {
 	const supabase = createClient();
 	const [username, setUsername] = useState<string | null>(null);
@@ -52,8 +50,10 @@ export default function CaseFilesLanding() {
 
 				solvesQuery.then((result) => {
 					if (result.data) {
-						const solves: QueryData<typeof solvesQuery> =
-							result.data;
+						let solves: QueryData<typeof solvesQuery> = result.data;
+						if (solves.length === 0) {
+							solves = [{ question: { index: 0 } }];
+						}
 						setSolves(
 							solves.map((s) => {
 								return s.question.index;

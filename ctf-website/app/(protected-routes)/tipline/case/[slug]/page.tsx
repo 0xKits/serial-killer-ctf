@@ -42,8 +42,11 @@ export default function CaseInformation({
 
 					solvesQuery.then((result) => {
 						if (result.data) {
-							const solves: QueryData<typeof solvesQuery> =
+							let solves: QueryData<typeof solvesQuery> =
 								result.data;
+							if (solves.length === 0) {
+								solves = [{ question: { index: 0 } }];
+							}
 							if (
 								!addOneToArray(
 									solves.map((s) => s.question.index)

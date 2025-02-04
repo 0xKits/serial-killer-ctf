@@ -51,6 +51,13 @@ export default function CaseInformation({
 						if (result.data) {
 							let solves: QueryData<typeof solvesQuery> =
 								result.data;
+							if (
+								solves
+									.map((s) => s.question.index)
+									.includes(Number(p.slug))
+							) {
+								setFlagStatus("success");
+							}
 							if (solves.length === 0) {
 								solves = [{ question: { index: 0 } }];
 							}
@@ -131,7 +138,7 @@ export default function CaseInformation({
 			res.json().then((data) => {
 				if (data.correct) {
 					setFlagStatus("success");
-          redirect("/tipline");
+					redirect("/tipline");
 				} else {
 					setFlagStatus("error");
 				}
@@ -151,13 +158,15 @@ export default function CaseInformation({
 			)}
 			<header className="bg-[#00285e] text-white py-4">
 				<div className="container mx-auto px-4 flex items-center">
-					<Image
-						src="/fbi-logo.png"
-						alt="FBI Seal"
-						width={50}
-						height={50}
-						className="rounded-full mr-4"
-					/>
+					<Link href="/tipline" className="rounded-full mr-4">
+						<Image
+							src="/fbi-logo.png"
+							alt="FBI Seal"
+							width={50}
+							height={50}
+							className=""
+						/>
+					</Link>
 					<h1 className="text-2xl font-bold">
 						Federal Bureau of Investigation
 					</h1>
@@ -194,7 +203,7 @@ export default function CaseInformation({
 											asChild
 											className="ml-2 text-[#b41e22]"
 										>
-											<a href={a.attachment} download>
+											<a href={a.attachment}>
 												<FileDown
 													className="mr-1"
 													size={16}
@@ -226,6 +235,7 @@ export default function CaseInformation({
 										id="flag"
 										placeholder="Enter your findings here"
 										value={flagInput}
+										disabled={flagStatus === "success"}
 										onChange={(e) =>
 											setFlagInput(e.target.value)
 										}

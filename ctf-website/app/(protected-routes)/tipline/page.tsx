@@ -7,11 +7,9 @@ import { Folder, Lock, CheckCircle } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import UsernamePopup from "@/components/ui/username-popup";
 import { QueryData } from "@supabase/supabase-js";
+import { addOneToArray } from "@/utils/arrayUtils";
 
-export const addOneToArray = (arr: number[]) => {
-	const next = Math.max(...arr) + 1;
-	return [...arr, next];
-};
+
 
 export default function CaseFilesLanding() {
 	const supabase = createClient();

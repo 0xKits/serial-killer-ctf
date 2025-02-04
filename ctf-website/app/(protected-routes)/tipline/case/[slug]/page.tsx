@@ -8,7 +8,7 @@ import { FileDown, AlertTriangle, CheckCircle } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { QueryData } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-import { addOneToArray } from "../../page";
+import { addOneToArray } from "@/utils/arrayUtils";
 
 export default function CaseInformation({
 	params,

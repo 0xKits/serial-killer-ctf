@@ -10,6 +10,7 @@ import { QueryData } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import { addOneToArray } from "@/utils/arrayUtils";
 import Link from "next/link";
+import { STARTED } from "@/siteconfig";
 
 export default function CaseInformation({
 	params,
@@ -146,138 +147,144 @@ export default function CaseInformation({
 		});
 	};
 
-	return (
-		<div className="min-h-screen flex flex-col bg-gray-100 text-gray-800">
-			{loading && (
-				<div className="w-screen h-screen absolute z-50 bg-black/20 backdrop-blur-md flex flex-col justify-center items-center">
-					<div className="flex justify-center items-center gap-4 text-6xl text-white bold ">
-						<p>Loading</p>
-						<SvgSpinnersBlocksWave className="shadow-[0_0_15px_#ffffff]" />
-					</div>
-				</div>
-			)}
-			<header className="bg-[#00285e] text-white py-4">
-				<div className="container mx-auto px-4 flex items-center">
-					<Link href="/tipline" className="rounded-full mr-4">
-						<Image
-							src="/fbi-logo.png"
-							alt="FBI Seal"
-							width={50}
-							height={50}
-							className=""
-						/>
-					</Link>
-					<h1 className="text-2xl font-bold">
-						Federal Bureau of Investigation
-					</h1>
-				</div>
-			</header>
+	if(STARTED) {
 
-			<main className="flex-grow container mx-auto px-4 py-8">
-				<div className="bg-white shadow-lg rounded-lg overflow-hidden">
-					<div className="p-6 border-b border-gray-200">
-						<h2 className="text-3xl font-bold text-[#00285e] mb-2">
-							{question?.title}
-						</h2>
-						<p className="text-gray-600">
-							Last Updated: {new Date().toLocaleDateString()}
+		return (
+			<div className="min-h-screen flex flex-col bg-gray-100 text-gray-800">
+				{loading && (
+					<div className="w-screen h-screen absolute z-50 bg-black/20 backdrop-blur-md flex flex-col justify-center items-center">
+						<div className="flex justify-center items-center gap-4 text-6xl text-white bold ">
+							<p>Loading</p>
+							<SvgSpinnersBlocksWave className="shadow-[0_0_15px_#ffffff]" />
+						</div>
+					</div>
+				)}
+				<header className="bg-[#00285e] text-white py-4">
+					<div className="container mx-auto px-4 flex items-center">
+						<Link href="/tipline" className="rounded-full mr-4">
+							<Image
+								src="/fbi-logo.png"
+								alt="FBI Seal"
+								width={50}
+								height={50}
+								className=""
+							/>
+						</Link>
+						<h1 className="text-2xl font-bold">
+							Federal Bureau of Investigation
+						</h1>
+					</div>
+				</header>
+	
+				<main className="flex-grow container mx-auto px-4 py-8">
+					<div className="bg-white shadow-lg rounded-lg overflow-hidden">
+						<div className="p-6 border-b border-gray-200">
+							<h2 className="text-3xl font-bold text-[#00285e] mb-2">
+								{question?.title}
+							</h2>
+							<p className="text-gray-600">
+								Last Updated: {new Date().toLocaleDateString()}
+							</p>
+						</div>
+	
+						<div className="p-6">
+							<h3 className="text-xl font-semibold mb-4">
+								Case Overview
+							</h3>
+							<p className="mb-4">{question?.description}</p>
+	
+							<div className="mb-6">
+								<h4 className="text-lg font-semibold mb-2">
+									Available Evidence
+								</h4>
+								<ul className="list-disc pl-5 space-y-2">
+									{attachments.map((a) => (
+										<li key={a.attachment_name}>
+											{a.attachment_name}
+											<Button
+												variant="link"
+												asChild
+												className="ml-2 text-[#b41e22]"
+											>
+												<a href={a.attachment}>
+													<FileDown
+														className="mr-1"
+														size={16}
+													/>
+													Download
+												</a>
+											</Button>
+										</li>
+									))}
+								</ul>
+							</div>
+	
+							<div className="mb-6">
+								<h4 className="text-lg font-semibold mb-2">Task</h4>
+								<p>{question?.task}</p>
+							</div>
+	
+							<form onSubmit={handleFlagSubmit} className="space-y-4">
+								<div>
+									<label
+										htmlFor="flag"
+										className="block text-sm font-medium text-gray-700 mb-1"
+									>
+										Submit Investigation Findings
+									</label>
+									<div className="flex">
+										<Input
+											type="text"
+											id="flag"
+											placeholder="Enter your findings here"
+											value={flagInput}
+											disabled={flagStatus === "success"}
+											onChange={(e) =>
+												setFlagInput(e.target.value)
+											}
+											className="flex-grow mr-2"
+										/>
+										<Button
+											type="submit"
+											className="bg-[#00285e] hover:bg-[#001f4b] text-white"
+										>
+											Submit
+										</Button>
+									</div>
+								</div>
+								{flagStatus === "success" && (
+									<div className="flex items-center text-green-600">
+										<CheckCircle className="mr-2" size={20} />
+										Information verified. Thank you for your
+										contribution to this case.
+									</div>
+								)}
+								{flagStatus === "error" && (
+									<div className="flex items-center text-[#b41e22]">
+										<AlertTriangle className="mr-2" size={20} />
+										Unable to verify the provided information.
+										Please review and try again.
+									</div>
+								)}
+							</form>
+						</div>
+					</div>
+				</main>
+	
+				<footer className="bg-[#00285e] text-white py-4 mt-8">
+					<div className="container mx-auto px-4 text-center">
+						<p>
+							&copy; {new Date().getFullYear()} Federal Bureau of
+							Investigation
 						</p>
 					</div>
-
-					<div className="p-6">
-						<h3 className="text-xl font-semibold mb-4">
-							Case Overview
-						</h3>
-						<p className="mb-4">{question?.description}</p>
-
-						<div className="mb-6">
-							<h4 className="text-lg font-semibold mb-2">
-								Available Evidence
-							</h4>
-							<ul className="list-disc pl-5 space-y-2">
-								{attachments.map((a) => (
-									<li key={a.attachment_name}>
-										{a.attachment_name}
-										<Button
-											variant="link"
-											asChild
-											className="ml-2 text-[#b41e22]"
-										>
-											<a href={a.attachment}>
-												<FileDown
-													className="mr-1"
-													size={16}
-												/>
-												Download
-											</a>
-										</Button>
-									</li>
-								))}
-							</ul>
-						</div>
-
-						<div className="mb-6">
-							<h4 className="text-lg font-semibold mb-2">Task</h4>
-							<p>{question?.task}</p>
-						</div>
-
-						<form onSubmit={handleFlagSubmit} className="space-y-4">
-							<div>
-								<label
-									htmlFor="flag"
-									className="block text-sm font-medium text-gray-700 mb-1"
-								>
-									Submit Investigation Findings
-								</label>
-								<div className="flex">
-									<Input
-										type="text"
-										id="flag"
-										placeholder="Enter your findings here"
-										value={flagInput}
-										disabled={flagStatus === "success"}
-										onChange={(e) =>
-											setFlagInput(e.target.value)
-										}
-										className="flex-grow mr-2"
-									/>
-									<Button
-										type="submit"
-										className="bg-[#00285e] hover:bg-[#001f4b] text-white"
-									>
-										Submit
-									</Button>
-								</div>
-							</div>
-							{flagStatus === "success" && (
-								<div className="flex items-center text-green-600">
-									<CheckCircle className="mr-2" size={20} />
-									Information verified. Thank you for your
-									contribution to this case.
-								</div>
-							)}
-							{flagStatus === "error" && (
-								<div className="flex items-center text-[#b41e22]">
-									<AlertTriangle className="mr-2" size={20} />
-									Unable to verify the provided information.
-									Please review and try again.
-								</div>
-							)}
-						</form>
-					</div>
-				</div>
-			</main>
-
-			<footer className="bg-[#00285e] text-white py-4 mt-8">
-				<div className="container mx-auto px-4 text-center">
-					<p>
-						&copy; {new Date().getFullYear()} Federal Bureau of
-						Investigation
-					</p>
-				</div>
-			</footer>
-		</div>
-	);
+				</footer>
+			</div>
+		);
+	}
+	return(
+		<div className="flex justify-center items-center font-bold text-center text-8xl">Site under maintenance until 15:30 05/02/25 IST</div>
+	)
 }
 
 function SvgSpinnersBlocksWave(props: React.SVGProps<SVGSVGElement>) {

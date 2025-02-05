@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 	const correctFlag = await supabase
 		.from("questions")
 		.select("flag")
-		.eq("id", data.question_index);
+		.eq("index", data.question_index);
 
 	if (user.data.user) {
 		if (correctFlag.data) {

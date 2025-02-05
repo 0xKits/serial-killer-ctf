@@ -1,4 +1,3 @@
-
 import { Search } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
@@ -8,7 +7,7 @@ export default function FBILandingPage() {
 	return (
 		<div className="min-h-screen flex flex-col bg-white text-gray-800">
 			{/* Header */}
-			
+
 			<Navbar />
 
 			{/* Main Content */}
@@ -35,9 +34,9 @@ export default function FBILandingPage() {
 							</button>
 						</div>
 					</div>
-                </section>
+				</section>
 
-				{/* <section className="py-12 bg-gray-100">
+				<section className="py-12 bg-gray-100">
 					<div className="container mx-auto px-4">
 						<div className="bg-white rounded-lg shadow-lg p-8">
 							<h3 className="text-2xl font-bold mb-4 text-[#b41e22]">
@@ -80,15 +79,15 @@ export default function FBILandingPage() {
 							</div>
 						</div>
 					</div>
-				</section> */}
+				</section>
 
-                <section>
+				{/* <section>
                     <div className=" flex flex-col bg-white text-gray-800 items-center justify-center">
                         <h1 className="text-4xl font-bold text-[#00285e]">
                             Investigation Starting Soon...
                         </h1>
                     </div>
-                </section>
+                </section> */}
 			</main>
 
 			{/* Footer */}

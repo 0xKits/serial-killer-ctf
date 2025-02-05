@@ -233,7 +233,7 @@ export default function CaseFilesLanding() {
 									))}
 							</div>
 						</div>
-						{solves?.includes(8) && (
+						{solves?.includes(7) && (
 							<div className="w-full flex flex-col justify-center items-center p-6 bg-green-100 border-t border-green-200">
 								<h3 className="text-2xl font-bold text-green-700 mb-4">
 									Congratulations, Special Agent!

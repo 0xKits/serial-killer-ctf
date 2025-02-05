@@ -1,2 +1,2 @@
 
-export const STARTED: boolean = false;
+export const STARTED: boolean = true;

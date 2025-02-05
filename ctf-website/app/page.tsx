@@ -45,8 +45,7 @@ export default function FBILandingPage() {
 							<div className="flex flex-col md:flex-row items-start md:items-center gap-8">
 								<div className="flex-grow">
 									<p className="text-lg mb-4">
-										The FBI is seeking information on a
-										serial killer known only as "Viktor".
+										The FBI is seeking information on a notorious serial killer whose identity is unknown.
 										This individual is believed to be
 										responsible for a series of violent
 										crimes across multiple states. Your

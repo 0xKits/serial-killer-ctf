@@ -246,7 +246,7 @@ export default function CaseFilesLanding() {
 									investigation to a successful conclusion.
 									Due to the exceptional skill you have demonstrated
 									in solving this case, we would like to offer you a position
-									as cybersecurity analyst at the FBI. Reach out to our recruiter, <b>@0xKits</b>, on
+									as cybersecurity analyst at the FBI. Reach out to our recruiter "<b>@0xKits</b>" on
 									Discord with the following message: <b>SSN_FB1_CTF_2o25</b>
 									
 								</p>

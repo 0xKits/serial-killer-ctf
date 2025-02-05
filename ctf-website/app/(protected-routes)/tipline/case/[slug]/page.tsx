@@ -33,6 +33,7 @@ export default function CaseInformation({
 		}[]
 	>([]);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [submitLoading, setSubmitLoading] = useState<boolean>(false)
 	const [caseNumber, setCaseNumber] = useState<number | null>(null);
 	const [flagStatus, setFlagStatus] = useState<"idle" | "success" | "error">(
 		"idle"
@@ -137,6 +138,7 @@ export default function CaseInformation({
 
 	const handleFlagSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
+		setSubmitLoading(true)
 		fetch("/api/submit_flag", {
 			method: "POST",
 			headers: {
@@ -148,6 +150,7 @@ export default function CaseInformation({
 			}),
 		}).then((res) => {
 			res.json().then((data) => {
+				setSubmitLoading(false)
 				if (data.correct) {
 					setFlagStatus("success");
 					redirect("/tipline");
@@ -266,9 +269,10 @@ export default function CaseInformation({
 										/>
 										<Button
 											type="submit"
+											disabled={submitLoading}
 											className="bg-[#00285e] hover:bg-[#001f4b] text-white"
 										>
-											Submit
+											{submitLoading? <SvgSpinnersBlocksWave /> : "Submit"}
 										</Button>
 									</div>
 								</div>

@@ -47,7 +47,11 @@ const CTFStatsPage = () => {
 	useEffect(() => {
 		const fetchStats = async () => {
 			try {
-				const response = await fetch("/api/stats");
+				const response = await fetch("/api/stats", {
+					next: {
+						revalidate: 300,
+					},
+				});
 				if (!response.ok) {
 					throw new Error(
 						`Failed to fetch stats: ${response.statusText}`
@@ -125,34 +129,40 @@ const CTFStatsPage = () => {
 					<CardTitle>Your Performance</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-						<div className="flex items-center space-x-2">
+					<div className="grid grid-cols-1 md:grid-cols-2 place-items-center text-center gap-4">
+						<div className="flex items-center space-x-2 text-center">
 							<Clock className="w-4 h-4" />
 							<span>
-								Start Time:{" "}
+								<b>Start Time:</b>{" "}
 								{formatTime(stats.user.startTimestamp)}
 							</span>
 						</div>
 						<div className="flex items-center space-x-2">
 							<Trophy className="w-4 h-4" />
 							<span>
-								Status:{" "}
+								<b>Status:</b>{" "}
 								{stats.user.completed
 									? "Completed"
 									: "In Progress"}
 							</span>
 						</div>
-						<div>Time Taken: {userCompletionTime}</div>
+						<div>
+							<b>Time Taken:</b> {userCompletionTime}
+						</div>
+						<div>
+							<b>Last Solved:</b> Q
+							{stats.user.solves.sort().reverse()[0]}
+						</div>
 					</div>
 				</CardContent>
 			</Card>
 
 			{/* Question Stats */}
-			<Card>
+			<Card className="">
 				<CardHeader>
 					<CardTitle>Question Statistics</CardTitle>
 				</CardHeader>
-				<CardContent>
+				<CardContent className="">
 					<div className="h-[300px]">
 						<ResponsiveContainer width="100%" height="100%">
 							<BarChart
@@ -161,20 +171,8 @@ const CTFStatsPage = () => {
 								)}
 							>
 								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis
-									dataKey="number"
-									label={{
-										value: "Question Number",
-										position: "bottom",
-									}}
-								/>
-								<YAxis
-									label={{
-										value: "Number of Solves",
-										angle: -90,
-										position: "left",
-									}}
-								/>
+								<XAxis dataKey="number" />
+								<YAxis />
 								<Tooltip />
 								<Bar dataKey="solves" fill="#3b82f6" />
 							</BarChart>
@@ -255,5 +253,6 @@ const CTFStatsPage = () => {
 		</div>
 	);
 };
+
 
 export default CTFStatsPage;

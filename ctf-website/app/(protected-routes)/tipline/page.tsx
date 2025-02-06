@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Folder, Lock, CheckCircle } from "lucide-react";
+import { Folder, CheckCircle } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import UsernamePopup from "@/components/ui/username-popup";
 import { QueryData } from "@supabase/supabase-js";
